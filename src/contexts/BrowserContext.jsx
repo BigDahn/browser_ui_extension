@@ -1,30 +1,17 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-//import dsata from "../../data.json";
+import data from "../../data.json";
 
 const BrowserContext = createContext();
 
 const initialState = {
   status: "loading",
-  initial: "",
-  data: [],
-  changedData: [],
+  initial: "all",
+  data: data,
+  changedData: data,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "dataReceived":
-      return {
-        ...state,
-        data: action.payload,
-        changedData: action.payload,
-        status: "ready",
-        initial: "all",
-      };
-    case "dataFailed":
-      return {
-        ...state,
-        status: "error",
-      };
     case "toggle":
       //console.log(action);
       const New_data = state.data.map((s) => {
@@ -63,8 +50,7 @@ function reducer(state, action) {
       };
     case "active":
       const Active_Data = state.data.filter((s) => s.isActive === true);
-      console.log(state.data);
-      console.log(state.changedData);
+
       return {
         ...state,
         changedData: Active_Data,
@@ -97,12 +83,6 @@ function reducer(state, action) {
 }
 
 function BrowserProvider({ children }) {
-  useEffect(function () {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
   const [{ status, initial, changedData, data }, dispatch] = useReducer(
     reducer,
     initialState
