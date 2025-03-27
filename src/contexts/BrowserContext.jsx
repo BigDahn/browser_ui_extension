@@ -45,10 +45,6 @@ function reducer(state, action) {
         }
         return s;
       });
-      console.log(state.data);
-      console.log(New_data);
-      console.log(New_data2);
-      console.log(state.initial);
 
       return {
         ...state,
@@ -102,7 +98,7 @@ function reducer(state, action) {
 
 function BrowserProvider({ children }) {
   useEffect(function () {
-    fetch("../../data.json")
+    fetch("/data.json")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch((err) => dispatch({ type: "dataFailed" }));
