@@ -25,7 +25,7 @@ function HeadingFilter() {
     active = "active";
   }
   //
-  console.log(initial);
+
 
   return (
     <StyledDiv>
